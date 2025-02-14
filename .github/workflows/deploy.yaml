@@ -3,7 +3,6 @@ name: Lafialink Project Pipeline
 on:
   push:
     branches:
-      - new_branch
       - main
 
 jobs:
