@@ -21,12 +21,6 @@ jobs:
         run: |
           echo "Short SHA: ${{ env.SHORT_SHA }}"
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
       - name: Build Docker Image
         run: |
           docker build -t profgreatwonder/lafialink_project_pipeline:${{ env.SHORT_SHA }} .
@@ -34,6 +28,12 @@ jobs:
       - name: Test Docker Image
         run: |
           docker run --rm profgreatwonder/lafialink_project_pipeline:${{ env.SHORT_SHA }} echo "Image test successful"
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Push to Docker Hub
         run: |
